@@ -154,10 +154,12 @@ jobs:
         USE_SYSTEM_PROTOC: "true"
     - name: Upload artifacts to aliyun OSS
       run: |
-        CWD=`pwd`
-        TAR_NAME=jsar-runtime-windows.tar.gz
-        cd ./build/output/release/x86_64-pc-windows-msvc && tar -czvf $CWD/$TAR_NAME .
-        cd $CWD && node ./tools/upload-aliyun.mjs ${{ github.event.inputs.tag_name }} $TAR_NAME
+        $CWD = Get-Location
+        $TAR_NAME = "jsar-runtime-windows.tar.gz"
+        Set-Location -Path ".\build\output\release\x86_64-pc-windows-msvc"
+        tar -czvf $CWD/$TAR_NAME .
+        Set-Location -Path $CWD
+        node .\tools\upload-aliyun.mjs ${{ github.event.inputs.tag_name }} $TAR_NAME
       env:
         ALIYUN_ACCESS_KEY_ID: ${{ secrets.ALIYUN_ACCESS_KEY_ID }}
         ALIYUN_ACCESS_KEY_SECRET: ${{ secrets.ALIYUN_ACCESS_KEY_SECRET }}
