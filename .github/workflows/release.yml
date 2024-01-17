@@ -57,11 +57,10 @@ jobs:
         USE_SYSTEM_PROTOC: "true"
     - name: Upload artifacts to aliyun OSS
       run: |
+        CWD=`pwd`
         TAR_NAME=jsar-runtime-android.tar.gz
-        TAR_FILENAME=`pwd`/$TAR_NAME
-        echo "TAR_FILENAME: $TAR_FILENAME"
-        cd ./build/output/release/aarch64-linux-android && tar -czvf $TAR_FILENAME .
-        node ./tools/upload-aliyun.mjs ${{ github.event.inputs.tag_name }} $TAR_NAME
+        cd ./build/output/release/aarch64-linux-android && tar -czvf $CWD/$TAR_NAME .
+        cd $CWD && node ./tools/upload-aliyun.mjs ${{ github.event.inputs.tag_name }} $TAR_NAME
       env:
         ALIYUN_ACCESS_KEY_ID: ${{ secrets.ALIYUN_ACCESS_KEY_ID }}
         ALIYUN_ACCESS_KEY_SECRET: ${{ secrets.ALIYUN_ACCESS_KEY_SECRET }}
@@ -107,11 +106,10 @@ jobs:
         USE_SYSTEM_PROTOC: "true"
     - name: Upload artifacts to aliyun OSS
       run: |
+        CWD=`pwd`
         TAR_NAME=jsar-runtime-darwin.tar.gz
-        TAR_FILENAME=`pwd`/$TAR_NAME
-        echo "TAR_FILENAME: $TAR_FILENAME"
-        cd ./build/output/release/universal-apple-darwin && tar -czvf $TAR_FILENAME .
-        node ./tools/upload-aliyun.mjs ${{ github.event.inputs.tag_name }} $TAR_NAME
+        cd ./build/output/release/universal-apple-darwin && tar -czvf $CWD/$TAR_NAME .
+        cd $CWD && node ./tools/upload-aliyun.mjs ${{ github.event.inputs.tag_name }} $TAR_NAME
       env:
         ALIYUN_ACCESS_KEY_ID: ${{ secrets.ALIYUN_ACCESS_KEY_ID }}
         ALIYUN_ACCESS_KEY_SECRET: ${{ secrets.ALIYUN_ACCESS_KEY_SECRET }}
@@ -156,11 +154,10 @@ jobs:
         USE_SYSTEM_PROTOC: "true"
     - name: Upload artifacts to aliyun OSS
       run: |
+        CWD=`pwd`
         TAR_NAME=jsar-runtime-windows.tar.gz
-        TAR_FILENAME=`pwd`/$TAR_NAME
-        echo "TAR_FILENAME: $TAR_FILENAME"
-        cd ./build/output/release/x86_64-pc-windows-msvc && tar -czvf $TAR_FILENAME .
-        node ./tools/upload-aliyun.mjs ${{ github.event.inputs.tag_name }} $TAR_NAME
+        cd ./build/output/release/x86_64-pc-windows-msvc && tar -czvf $CWD/$TAR_NAME .
+        cd $CWD && node ./tools/upload-aliyun.mjs ${{ github.event.inputs.tag_name }} $TAR_NAME
       env:
         ALIYUN_ACCESS_KEY_ID: ${{ secrets.ALIYUN_ACCESS_KEY_ID }}
         ALIYUN_ACCESS_KEY_SECRET: ${{ secrets.ALIYUN_ACCESS_KEY_SECRET }}
