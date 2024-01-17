@@ -15,6 +15,7 @@ jobs:
       with:
         repository: M-CreativeLab/jsar-runtime
         ref: main
+        ssh-key: ${{ secrets.GIT_SSH_KEY }}
     - name: Set up Rust
       uses: actions-rs/toolchain@v1
       with:
