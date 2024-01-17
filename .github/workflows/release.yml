@@ -57,8 +57,11 @@ jobs:
         USE_SYSTEM_PROTOC: "true"
     - name: Upload artifacts to aliyun OSS
       run: |
-        cd ./build/output/release/aarch64-linux-android && tar -czvf jsar-runtime-windows.tar.gz .
-        node ./tools/upload-aliyun.mjs ${{ github.event.inputs.tag_name }} ./jsar-runtime-android.tar.gz
+        TAR_NAME=jsar-runtime-android.tar.gz
+        TAR_FILENAME=`pwd`/$TAR_NAME
+        echo "TAR_FILENAME: $TAR_FILENAME"
+        cd ./build/output/release/aarch64-linux-android && tar -czvf $TAR_FILENAME .
+        node ./tools/upload-aliyun.mjs ${{ github.event.inputs.tag_name }} $TAR_NAME
       env:
         ALIYUN_ACCESS_KEY_ID: ${{ secrets.ALIYUN_ACCESS_KEY_ID }}
         ALIYUN_ACCESS_KEY_SECRET: ${{ secrets.ALIYUN_ACCESS_KEY_SECRET }}
@@ -104,8 +107,11 @@ jobs:
         USE_SYSTEM_PROTOC: "true"
     - name: Upload artifacts to aliyun OSS
       run: |
-        cd ./build/output/release/universal-apple-darwin && tar -czvf jsar-runtime-windows.tar.gz .
-        node ./tools/upload-aliyun.mjs ${{ github.event.inputs.tag_name }} ./jsar-runtime-darwin.tar.gz
+        TAR_NAME=jsar-runtime-darwin.tar.gz
+        TAR_FILENAME=`pwd`/$TAR_NAME
+        echo "TAR_FILENAME: $TAR_FILENAME"
+        cd ./build/output/release/universal-apple-darwin && tar -czvf $TAR_FILENAME .
+        node ./tools/upload-aliyun.mjs ${{ github.event.inputs.tag_name }} $TAR_NAME
       env:
         ALIYUN_ACCESS_KEY_ID: ${{ secrets.ALIYUN_ACCESS_KEY_ID }}
         ALIYUN_ACCESS_KEY_SECRET: ${{ secrets.ALIYUN_ACCESS_KEY_SECRET }}
@@ -150,8 +156,11 @@ jobs:
         USE_SYSTEM_PROTOC: "true"
     - name: Upload artifacts to aliyun OSS
       run: |
-        cd ./build/output/release/x86_64-pc-windows-msvc && tar -czvf jsar-runtime-windows.tar.gz .
-        node ./tools/upload-aliyun.mjs ${{ github.event.inputs.tag_name }} ./jsar-runtime-windows.tar.gz
+        TAR_NAME=jsar-runtime-windows.tar.gz
+        TAR_FILENAME=`pwd`/$TAR_NAME
+        echo "TAR_FILENAME: $TAR_FILENAME"
+        cd ./build/output/release/x86_64-pc-windows-msvc && tar -czvf $TAR_FILENAME .
+        node ./tools/upload-aliyun.mjs ${{ github.event.inputs.tag_name }} $TAR_NAME
       env:
         ALIYUN_ACCESS_KEY_ID: ${{ secrets.ALIYUN_ACCESS_KEY_ID }}
         ALIYUN_ACCESS_KEY_SECRET: ${{ secrets.ALIYUN_ACCESS_KEY_SECRET }}
@@ -189,7 +198,7 @@ jobs:
           mkdir -p out/darwin && tar -xvf jsar-runtime-darwin.tar.gz -C out/darwin
           mkdir -p out/windows && tar -xvf jsar-runtime-windows.tar.gz -C out/windows
           mkdir -p out && cp -r src/proto out/
-          cd out && tar -czvf jsar-runtime-release.tar.gz .
+          cd out && tar -czvf ../jsar-runtime-release.tar.gz .
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
