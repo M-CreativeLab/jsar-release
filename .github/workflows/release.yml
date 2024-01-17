@@ -1,4 +1,4 @@
-name: Release
+name: JSAR Runtime Release
 
 on:
   workflow_dispatch:
@@ -71,6 +71,7 @@ jobs:
       with:
         repository: M-CreativeLab/jsar-runtime
         ref: main
+        token: ${{ secrets.PAT }}
     - name: Set up Rust
       uses: actions-rs/toolchain@v1
       with:
@@ -117,6 +118,7 @@ jobs:
       with:
         repository: M-CreativeLab/jsar-runtime
         ref: main
+        token: ${{ secrets.PAT }}
     - name: Set up Rust
       uses: actions-rs/toolchain@v1
       with:
