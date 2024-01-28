@@ -3,6 +3,9 @@ name: JSAR Runtime Release
 on:
   workflow_dispatch:
     inputs:
+      ref:
+        description: 'Ref name of the source tree'
+        required: true
       tag_name:
         description: 'Tag Name for Release: amidala-v1.0.0'
         required: true
@@ -14,7 +17,7 @@ jobs:
     - uses: actions/checkout@v3
       with:
         repository: M-CreativeLab/jsar-runtime
-        ref: main
+        ref: ${{ github.event.inputs.tag_name }}
         token: ${{ secrets.PAT }}
     - name: Set up Rust
       uses: actions-rs/toolchain@v1
@@ -72,7 +75,7 @@ jobs:
     - uses: actions/checkout@v3
       with:
         repository: M-CreativeLab/jsar-runtime
-        ref: main
+        ref: ${{ github.event.inputs.tag_name }}
         token: ${{ secrets.PAT }}
     - name: Set up Rust
       uses: actions-rs/toolchain@v1
@@ -121,7 +124,7 @@ jobs:
     - uses: actions/checkout@v3
       with:
         repository: M-CreativeLab/jsar-runtime
-        ref: main
+        ref: ${{ github.event.inputs.tag_name }}
         token: ${{ secrets.PAT }}
     - name: Set up Rust
       uses: actions-rs/toolchain@v1
@@ -174,7 +177,7 @@ jobs:
       - uses: actions/checkout@v3
         with:
           repository: M-CreativeLab/jsar-runtime
-          ref: main
+          ref: ${{ github.event.inputs.tag_name }}
           token: ${{ secrets.PAT }}
       - uses: actions/setup-node@v4.0.0
         with:
